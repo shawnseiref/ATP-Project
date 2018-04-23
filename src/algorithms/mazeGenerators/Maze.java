@@ -4,7 +4,7 @@ package algorithms.mazeGenerators;
  * Maze class
  */
 public class Maze {
-    private int [][] maze;
+    private int [][] grid;
     private Position startPos;
     private Position goalPos;
 
@@ -16,13 +16,19 @@ public class Maze {
      * @param columns - number of columns the maze will have
      */
     public Maze (int rows, int columns){
+        grid = new int[rows][columns];
+        // CHECK IF ROWS OR COLUMNS >= 0 !!!!!
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                maze [i][j]=1;
+                grid [i][j]=1;
             }
         }
         startPos = new Position(-1,-1);
         goalPos = new Position(-1,-1);
+    }
+
+    public int[][] getGrid(){
+        return grid;
     }
 
     /**
@@ -39,6 +45,16 @@ public class Maze {
      */
     public Position getGoalPos() {
         return goalPos;
+    }
+
+    public void setStartPosition(int row, int column){
+        startPos.setRow(row);
+        startPos.setColumn(column);
+        grid[row][column] = 0;
+    }
+
+    public void setGrid(int[][] grid) {
+        this.grid = grid;
     }
 
     /**
