@@ -35,7 +35,7 @@ public class Maze {
      * get the start position
      * @return startPosition
      */
-    public Position getStartPosition(){
+    public Position getStartPos(){
         return startPos;
     }
 
@@ -47,10 +47,20 @@ public class Maze {
         return goalPos;
     }
 
-    public void setStartPosition(int row, int column){
-        startPos.setRow(row);
-        startPos.setColumn(column);
-        grid[row][column] = 0;
+    public void setStartPos(int row, int column){
+        if(getGoalPos().getColumnIndex() != -1 && getGoalPos().getRowIndex() != -1) {
+            startPos.setRow(row);
+            startPos.setColumn(column);
+            grid[row][column] = 0;
+        }
+    }
+    
+    public void setGoalPos(int row, int column){
+        if(getGoalPos().getColumnIndex() != -1 && getGoalPos().getRowIndex() != -1) {
+            goalPos.setRow(row);
+            goalPos.setColumn(column);
+            grid[row][column] = 0;
+        }
     }
 
     public void setGrid(int[][] grid) {
