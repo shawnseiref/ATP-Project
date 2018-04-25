@@ -82,13 +82,13 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         int endingPosition[] = new int[2];
         while (!flag) {
             endingPosition = makePosition(rows, columns);
-            if (m.getStartPos().getRowIndex() != endingPosition[0] && m.getStartPos().getColumnIndex() != endingPosition[1]) {
+            if (m.getStartPosition().getRowIndex() != endingPosition[0] && m.getStartPosition().getColumnIndex() != endingPosition[1]) {
                 flag = true;
             }
         }
         m.setGoalPos(endingPosition[0], endingPosition[1]);
         int[][] grid = m.getGrid();
-        grid = makePassage(grid, m.getGoalPos().getRowIndex(), m.getGoalPos().getColumnIndex(), m.getStartPos().getRowIndex(), m.getStartPos().getColumnIndex());
+        grid = makePassage(grid, m.getGoalPosition().getRowIndex(), m.getGoalPosition().getColumnIndex(), m.getStartPosition().getRowIndex(), m.getStartPosition().getColumnIndex());
         grid = randomizeWalls(grid);
         m.setGrid(grid);
         return m;

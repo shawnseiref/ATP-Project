@@ -35,7 +35,7 @@ public class Maze {
      * get the start position
      * @return startPosition
      */
-    public Position getStartPos(){
+    public Position getStartPosition(){
         return startPos;
     }
 
@@ -43,12 +43,12 @@ public class Maze {
      * get the goal position
      * @return goalPosition
      */
-    public Position getGoalPos() {
+    public Position getGoalPosition() {
         return goalPos;
     }
 
     public void setStartPos(int row, int column){
-        if(getGoalPos().getColumnIndex() != -1 && getGoalPos().getRowIndex() != -1) {
+        if(getGoalPosition().getColumnIndex() != -1 && getGoalPosition().getRowIndex() != -1) {
             startPos.setRow(row);
             startPos.setColumn(column);
             grid[row][column] = 0;
@@ -56,7 +56,7 @@ public class Maze {
     }
     
     public void setGoalPos(int row, int column){
-        if(getGoalPos().getColumnIndex() != -1 && getGoalPos().getRowIndex() != -1) {
+        if(getGoalPosition().getColumnIndex() != -1 && getGoalPosition().getRowIndex() != -1) {
             goalPos.setRow(row);
             goalPos.setColumn(column);
             grid[row][column] = 0;
@@ -73,6 +73,20 @@ public class Maze {
      * E - exit Position
      */
     public void print(){
-
+        int s_row = getStartPosition().getRowIndex();
+        int s_column = getStartPosition().getColumnIndex();
+        int e_row = getGoalPosition().getRowIndex();
+        int e_column = getGoalPosition().getColumnIndex();
+        for (int i = 0; i < grid.length; i++){
+            for (int j = 0; j< grid[0].length; j++){
+                if (i == s_row && j == s_column)
+                    System.out.print("S");
+                else if (i == e_row && j == e_column)
+                    System.out.print("E");
+                else
+                    System.out.print(grid[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
