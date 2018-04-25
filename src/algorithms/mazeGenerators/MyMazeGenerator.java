@@ -88,7 +88,7 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
 
         Position goal = findRandomPositionOnFrame(rows, columns);
-        while (goal.getColumnIndex()==start.getColumnIndex() && goal.getRowIndex()==start.getRowIndex())
+        while (goal.getColumnIndex()==start.getColumnIndex() || goal.getRowIndex()==start.getRowIndex() || grid[goal.getRowIndex()][goal.getColumnIndex()]!=0)
             goal = findRandomPositionOnFrame(rows, columns);
 
         //initialize myMaze with final grid
@@ -115,5 +115,6 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
         return pos;
     }
+
 
 }

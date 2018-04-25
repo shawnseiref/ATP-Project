@@ -40,6 +40,7 @@ public class Maze {
     }
 
     public Maze(int[][] grid, Position start, Position goal) {
+        maze = new int[grid.length][grid[0].length];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 maze[i][j] = grid[i][j];
@@ -63,7 +64,7 @@ public class Maze {
      *
      * @return goalPosition
      */
-    public Position getGoalPos() {
+    public Position getGoalPosition() {
         return goalPos;
     }
 
@@ -83,6 +84,17 @@ public class Maze {
      * E - exit Position
      */
     public void print() {
-
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[0].length; j++) {
+                if (maze[i][j] == 1)
+                    System.out.print("[#]");
+                else if (i==startPos.getRowIndex() && j==startPos.getColumnIndex())
+                    System.out.print("|S|");
+                else if (i==goalPos.getRowIndex() && j==goalPos.getColumnIndex())
+                    System.out.print("|G|");
+                else System.out.print("[ ]");
+            }
+            System.out.println();
+        }
     }
 }
