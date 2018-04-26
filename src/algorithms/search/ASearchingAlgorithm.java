@@ -10,10 +10,18 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
     protected ArrayList<AState> neighbors;
     protected Solution solution;
 
+    /**
+     * get the number of nodes that the searching algorithm has been in their state
+     * @return evaluatedNodesCount - the counter of the evaluated nodes
+     */
     public int getNumberOfNodesEvaluated() {
         return evaluatedNodesCount;
     }
 
+    /**
+     *
+     * @return
+     */
     public  String getName(){
         return this.getClass().getSimpleName();
     }
