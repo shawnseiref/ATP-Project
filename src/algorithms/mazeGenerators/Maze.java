@@ -4,78 +4,67 @@ package algorithms.mazeGenerators;
  * Maze class
  */
 public class Maze {
-    private int[][] maze;
+    private int [][] grid;
     private Position startPos;
     private Position goalPos;
 
-    public Maze() {
-        maze = null;
-        startPos = null;
-        goalPos = null;
-    }
 
     /**
      * Maze constructor, initialize all slots as wall (1)
-     * and start and goal positions as (-1,-1)
-     *
-     * @param rows    - number of rows the maze will have
+     *                   and start and goal positions as (-1,-1)
+     * @param rows - number of rows the maze will have
      * @param columns - number of columns the maze will have
      */
-    public Maze(int rows, int columns) {
-        maze = new int[rows][columns];
+    public Maze (int rows, int columns){
+        grid = new int[rows][columns];
+        // CHECK IF ROWS OR COLUMNS >= 0 !!!!!
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                maze[i][j] = 1;
+                grid [i][j]=1;
             }
         }
-        startPos = new Position(-1, -1);
-        goalPos = new Position(-1, -1);
+        startPos = new Position(-1,-1);
+        goalPos = new Position(-1,-1);
     }
 
-
-    public Maze(int rows, int columns, Position startPos, Position goalPos) {
-        this(rows, columns);
-        this.startPos = startPos;
-        this.goalPos = goalPos;
-    }
-
-    public Maze(int[][] grid, Position start, Position goal) {
-        maze = new int[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                maze[i][j] = grid[i][j];
-            }
-        }
-        startPos = start;
-        goalPos = goal;
+    public int[][] getGrid(){
+        return grid;
     }
 
     /**
      * get the start position
-     *
      * @return startPosition
      */
-    public Position getStartPosition() {
+    public Position getStartPosition(){
         return startPos;
     }
 
     /**
      * get the goal position
-     *
      * @return goalPosition
      */
     public Position getGoalPosition() {
         return goalPos;
     }
 
-    public void setStartPos(Position start) {
-        if (startPos.getColumnIndex() == -1 && startPos.getRowIndex() == -1)
-            startPos = start;
+    public void setStartPos(int row, int column){
+        if(getGoalPosition().getColumnIndex() != -1 && getGoalPosition().getRowIndex() != -1) {
+            startPos.setRow(row);
+            startPos.setColumn(column);
+            grid[row][column] = 0;
+        }
+    }
+    
+    public void setGoalPos(int row, int column){
+        if(getGoalPosition().getColumnIndex() != -1 && getGoalPosition().getRowIndex() != -1) {
+            goalPos.setRow(row);
+            goalPos.setColumn(column);
+            grid[row][column] = 0;
+        }
     }
 
-    public void setGoalPos(Position goal) {
-        if (goalPos.getColumnIndex() == -1 && goalPos.getRowIndex() == -1)
-            goalPos = goal;
+    public void setGrid(int[][] grid) {
+        this.grid = grid;
     }
 
     /**
@@ -83,16 +72,19 @@ public class Maze {
      * S - start Position
      * E - exit Position
      */
-    public void print() {
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze[0].length; j++) {
-                if (maze[i][j] == 1)
-                    System.out.print("[#]");
-                else if (i==startPos.getRowIndex() && j==startPos.getColumnIndex())
-                    System.out.print("|S|");
-                else if (i==goalPos.getRowIndex() && j==goalPos.getColumnIndex())
-                    System.out.print("|G|");
-                else System.out.print("[ ]");
+    public void print(){
+        int s_row = getStartPosition().getRowIndex();
+        int s_column = getStartPosition().getColumnIndex();
+        int e_row = getGoalPosition().getRowIndex();
+        int e_column = getGoalPosition().getColumnIndex();
+        for (int i = 0; i < grid.length; i++){
+            for (int j = 0; j< grid[0].length; j++){
+                if (i == s_row && j == s_column)
+                    System.out.print("S");
+                else if (i == e_row && j == e_column)
+                    System.out.print("E");
+                else
+                    System.out.print(grid[i][j]);
             }
             System.out.println();
         }
