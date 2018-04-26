@@ -8,11 +8,6 @@ public class Maze {
     private Position startPos;
     private Position goalPos;
 
-    public Maze() {
-        grid = null;
-        startPos = null;
-        goalPos = null;
-    }
 
     /**
      * Maze constructor, initialize all slots as wall (1)
@@ -28,30 +23,12 @@ public class Maze {
                 grid [i][j]=1;
             }
         }
-        startPos = new Position(-1, -1);
-        goalPos = new Position(-1, -1);
+        startPos = new Position(-1,-1);
+        goalPos = new Position(-1,-1);
     }
 
     public int[][] getGrid(){
         return grid;
-    }
-
-
-    public Maze(int rows, int columns, Position startPos, Position goalPos) {
-        this(rows, columns);
-        this.startPos = startPos;
-        this.goalPos = goalPos;
-    }
-
-    public Maze(int[][] grid, Position start, Position goal) {
-        grid = new int[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j] = grid[i][j];
-            }
-        }
-        startPos = start;
-        goalPos = goal;
     }
 
     /**
@@ -77,7 +54,7 @@ public class Maze {
             grid[row][column] = 0;
         }
     }
-
+    
     public void setGoalPos(int row, int column){
         if(getGoalPosition().getColumnIndex() != -1 && getGoalPosition().getRowIndex() != -1) {
             goalPos.setRow(row);

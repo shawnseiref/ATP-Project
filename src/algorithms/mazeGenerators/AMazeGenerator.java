@@ -18,3 +18,4 @@ public abstract class AMazeGenerator implements IMazeGenerator {
         return finishTime-startTime;
     }
 }
+‎
