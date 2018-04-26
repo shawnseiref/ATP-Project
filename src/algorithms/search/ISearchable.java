@@ -8,5 +8,5 @@ public interface ISearchable {
 
     AState getEndingState();
 
-    ArrayList<AState> getAllPossibleStaes();
+    ArrayList<AState> getAllPossibleStates(AState state);
 }
