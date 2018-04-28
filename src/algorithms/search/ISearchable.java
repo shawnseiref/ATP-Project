@@ -19,5 +19,10 @@ public interface ISearchable {
      */
     AState getEndingState();
 
+    /**
+     * get all the possible states given by a current state
+     * @param state - the current state
+     * @return ArrayList of Astates
+     */
     ArrayList<AState> getAllPossibleStates(AState state);
 }

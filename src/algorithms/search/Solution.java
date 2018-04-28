@@ -30,7 +30,7 @@ public class Solution {
      */
     public void backTrace(AState goal){
 
-        this.solutionPath.add((goal));
+        this.solutionPath.add(goal);
         while(goal.getPrev()!=null){
             this.solutionPath.add(goal.getPrev());
             goal = goal.getPrev();
