@@ -23,7 +23,7 @@ public class MyMazeGenerator extends AMazeGenerator {
             }
         }
 
-
+        //get the start position (randomly)
         Position start = findRandomPositionOnFrame(rows, columns);
         grid[start.getRowIndex()][start.getColumnIndex()] = 0;
         neighbors.add(start);
@@ -62,15 +62,26 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
 
         Position goal = findRandomPositionOnFrame(rows, columns);
-        while (goal.getColumnIndex()==start.getColumnIndex() || goal.getRowIndex()==start.getRowIndex() || grid[goal.getRowIndex()][goal.getColumnIndex()]!=0)
+
+        // while the start and goal are on the same side of the frame or the goal is on a wall, find another goal position
+        while (goal.getColumnIndex()==start.getColumnIndex() ||
+                goal.getRowIndex()==start.getRowIndex() ||
+                grid[goal.getRowIndex()][goal.getColumnIndex()]!=0)
             goal = findRandomPositionOnFrame(rows, columns);
 
         //initialize myMaze with final grid
         Maze myMaze = new Maze(grid, start, goal);
-
         return myMaze;
     }
 
+    /**
+     * add the valid neighbors to the list if it had the value 1
+     * @param grid - the grid of the map
+     * @param pos - the index that could be out of range
+     * @param limit - the range that pos cant pass
+     * @param i - row index
+     * @param j - column index
+     */
     private void addValidNeighbors(int[][] grid, int pos, int limit, int i, int j) {
         if (pos< limit && grid[i][j]==1){
             Position tmp = new Position(i,j);
@@ -78,11 +89,26 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
     }
 
+    /**
+     * check if its OK to break a wall (if only 1 neighbor has the value 0)
+     * @param grid - the grid of the map
+     * @param pos - the index that could be out of range
+     * @param limit - the range that pos cant pass
+     * @param i - row index
+     * @param j - column index
+     * @param count - the counter
+     * @return count or count++ depends if passed the check
+     */
     private int countWallBreaks(int [][] grid, int pos, int limit, int i, int j, int count) {
         return pos < limit && grid[i][j]==0? ++count: count;
     }
 
-
+    /**
+     * find a random position on the frame of a 2D array (based on math)
+     * @param rows - the number of rows the 2D array has
+     * @param columns - the number of columns the 2D array has
+     * @returns the random position on the frame
+     */
     private Position findRandomPositionOnFrame(int rows, int columns) {
         if (rows < 0 || columns < 0) return null;
         Position pos;
@@ -107,8 +133,8 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     private static Maze create(IMazeGenerator myMazeGenerator) {
-        System.out.println(myMazeGenerator.measureAlgorithmTimeMillis(20,20));
-        return myMazeGenerator.generate(20,20);
+        System.out.println(myMazeGenerator.measureAlgorithmTimeMillis(1000,1000));
+        return myMazeGenerator.generate(6,300);
     }
 
 }
