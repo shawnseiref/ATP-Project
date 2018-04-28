@@ -40,49 +40,23 @@ public class MyMazeGenerator extends AMazeGenerator {
 
             //break wall if allowed and check that only one or less neighbors with value 0
             count = 0;
-            if (pos.getRowIndex() - 1 >= 0 && grid[pos.getRowIndex() - 1][pos.getColumnIndex()] == 0)
-                count++;
-            if (pos.getColumnIndex() - 1 >= 0 && grid[pos.getRowIndex()][pos.getColumnIndex() - 1] == 0)
-                count++;
-            if (pos.getRowIndex() + 1 < grid.length && grid[pos.getRowIndex() + 1][pos.getColumnIndex()] == 0)
-                count++;
-            if (pos.getColumnIndex() + 1 < grid[0].length && grid[pos.getRowIndex()][pos.getColumnIndex() + 1] == 0)
-                count++;
+            int posRow = pos.getRowIndex();
+            int posCol = pos.getColumnIndex();
+            countWallBreaks(grid,0, posRow, posRow-1, posCol, count);
+            countWallBreaks(grid, 0, posCol, posRow, posCol-1,count);
+            countWallBreaks(grid, posRow+1, grid.length, posRow+1, posCol, count);
+            countWallBreaks(grid, posCol+1, grid[0].length, posRow, posCol+1, count);
             if (count <= 1) {
-                grid[pos.getRowIndex()][pos.getColumnIndex()] = 0;
+                grid[posRow][posCol] = 0;
                 flag = true;
             }
 
             //add valid neighbors to list, only if pos was a valid neighbor and value was 1 before
             if (flag) {
-                if (pos.getRowIndex() - 1 >= 0) {
-                    if (grid[pos.getRowIndex() - 1][pos.getColumnIndex()] == 1) {
-                        Position temp = new Position(pos.getRowIndex() - 1, pos.getColumnIndex());
-                        neighbors.add(temp);
-                    }
-                }
-
-                if (pos.getColumnIndex() - 1 >= 0) {
-                    if (grid[pos.getRowIndex()][pos.getColumnIndex() - 1] == 1) {
-                        Position temp = new Position(pos.getRowIndex(), pos.getColumnIndex() - 1);
-                        neighbors.add(temp);
-                    }
-                }
-
-                if (pos.getRowIndex() + 1 < grid.length) {
-                    if (grid[pos.getRowIndex() + 1][pos.getColumnIndex()] == 1) {
-                        Position temp = new Position(pos.getRowIndex() + 1, pos.getColumnIndex());
-                        neighbors.add(temp);
-                    }
-                }
-
-                if (pos.getColumnIndex() + 1 < grid[0].length) {
-                    if (grid[pos.getRowIndex()][pos.getColumnIndex() + 1] == 1) {
-                        Position temp = new Position(pos.getRowIndex(), pos.getColumnIndex() + 1);
-                        neighbors.add(temp);
-                    }
-                }
-
+                addValidNeighbors(grid, 0, posRow, posRow-1, posCol);
+                addValidNeighbors(grid, 0, posCol, posRow, posCol-1);
+                addValidNeighbors(grid, posRow+1, grid.length, posRow+1, posCol);
+                addValidNeighbors(grid, posCol+1, grid[0].length, posRow, posCol+1);
                 flag = false;
             }
         }
@@ -95,6 +69,17 @@ public class MyMazeGenerator extends AMazeGenerator {
         Maze myMaze = new Maze(grid, start, goal);
 
         return myMaze;
+    }
+
+    private void addValidNeighbors(int[][] grid, int pos, int limit, int i, int j) {
+        if (pos< limit && grid[i][j]==1){
+            Position tmp = new Position(i,j);
+            neighbors.add(tmp);
+        }
+    }
+
+    private void countWallBreaks(int [][] grid, int pos, int limit, int i, int j, int count) {
+        if (pos < limit && grid[i][j]==0 ) ;
     }
 
 
