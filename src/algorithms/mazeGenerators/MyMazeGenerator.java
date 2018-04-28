@@ -42,10 +42,10 @@ public class MyMazeGenerator extends AMazeGenerator {
             count = 0;
             int posRow = pos.getRowIndex();
             int posCol = pos.getColumnIndex();
-            countWallBreaks(grid,0, posRow, posRow-1, posCol, count);
-            countWallBreaks(grid, 0, posCol, posRow, posCol-1,count);
-            countWallBreaks(grid, posRow+1, grid.length, posRow+1, posCol, count);
-            countWallBreaks(grid, posCol+1, grid[0].length, posRow, posCol+1, count);
+            count = countWallBreaks(grid,0, posRow, posRow-1, posCol, count);
+            count = countWallBreaks(grid, 0, posCol, posRow, posCol-1,count);
+            count = countWallBreaks(grid, posRow+1, grid.length, posRow+1, posCol, count);
+            count = countWallBreaks(grid, posCol+1, grid[0].length, posRow, posCol+1, count);
             if (count <= 1) {
                 grid[posRow][posCol] = 0;
                 flag = true;
@@ -78,8 +78,8 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
     }
 
-    private void countWallBreaks(int [][] grid, int pos, int limit, int i, int j, int count) {
-        if (pos < limit && grid[i][j]==0 ) ;
+    private int countWallBreaks(int [][] grid, int pos, int limit, int i, int j, int count) {
+        return pos < limit && grid[i][j]==0? ++count: count;
     }
 
 
@@ -101,5 +101,14 @@ public class MyMazeGenerator extends AMazeGenerator {
         return pos;
     }
 
+    public static void main(String[] args) {
+        Maze m = create(new MyMazeGenerator());
+        m.print();
+    }
+
+    private static Maze create(IMazeGenerator myMazeGenerator) {
+        System.out.println(myMazeGenerator.measureAlgorithmTimeMillis(20,20));
+        return myMazeGenerator.generate(20,20);
+    }
 
 }
