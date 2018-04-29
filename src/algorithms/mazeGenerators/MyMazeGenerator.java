@@ -127,14 +127,5 @@ public class MyMazeGenerator extends AMazeGenerator {
         return pos;
     }
 
-    public static void main(String[] args) {
-        Maze m = create(new MyMazeGenerator());
-        m.print();
-    }
-
-    private static Maze create(IMazeGenerator myMazeGenerator) {
-        System.out.println(myMazeGenerator.measureAlgorithmTimeMillis(1000,1000));
-        return myMazeGenerator.generate(6,300);
-    }
 
 }

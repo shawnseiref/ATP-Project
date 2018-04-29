@@ -9,6 +9,16 @@ public abstract class AState{
     private double cost;
     private AState prev;
 
+
+    /**
+     * constructor of AState - initialize the state
+     * @param state
+     */
+    public AState(String state){
+        this.state = state;
+    }
+
+
     /**
      * constructor
      * @param state - String
