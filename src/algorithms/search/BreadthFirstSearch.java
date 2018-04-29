@@ -2,9 +2,9 @@ package algorithms.search;
 
 import java.util.*;
 
-public class BreathFirstSearch extends ASearchingAlgorithm {
+public class BreadthFirstSearch extends ASearchingAlgorithm {
 
-    public BreathFirstSearch() {
+    public BreadthFirstSearch() {
         evaluatedNodes = new HashSet<>();
         evaluatedNodesCount = 1;
         neighbors = new ArrayList<>();
