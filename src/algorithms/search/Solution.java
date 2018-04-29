@@ -19,7 +19,6 @@ public class Solution {
      * @return list of the solution path
      */
     public ArrayList getSolutionPath() {
-
         return solutionPath;
     }
 

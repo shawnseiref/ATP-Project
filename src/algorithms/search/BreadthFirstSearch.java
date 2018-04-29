@@ -4,10 +4,12 @@ import java.util.*;
 
 public class BreadthFirstSearch extends ASearchingAlgorithm {
 
+    private PriorityQueue<AState> pQueue;
+
     public BreadthFirstSearch() {
         evaluatedNodes = new HashSet<>();
         evaluatedNodesCount = 1;
-        neighbors = new ArrayList<>();
+//        neighbors = new ArrayList<>();
         solution = new Solution();
     }
 
@@ -18,7 +20,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
      * @return sulution
      */
     public Solution solve(ISearchable s) {
-        PriorityQueue<AState> pQueue = new PriorityQueue<>(new Comparator<AState>() {
+        pQueue = new PriorityQueue<>(new Comparator<AState>() {
             @Override
             public int compare(AState state, AState t1) {
                 return 0;
@@ -28,7 +30,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
         while (!pQueue.isEmpty()) {
             AState currState = pQueue.poll();
             evaluatedNodes.add(currState);
-            if (currState.getState().equals(s.getEndingState())) { //check if the state is the GoalState
+            if (currState.getState().equals(s.getEndingState().toString())) { //check if the state is the GoalState
                 solution.backTrace(currState);
                 return solution;
             }

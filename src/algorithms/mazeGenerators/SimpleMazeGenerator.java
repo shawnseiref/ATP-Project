@@ -80,10 +80,12 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         m.setStartPos(startPosition[0], startPosition[1]);
         boolean flag = false;
         int endingPosition[] = new int[2];
-        while (!flag) {
-            endingPosition = makePosition(rows, columns);
-            if (m.getStartPosition().getRowIndex() != endingPosition[0] && m.getStartPosition().getColumnIndex() != endingPosition[1]) {
-                flag = true;
+        if (rows >1 && columns>1) {
+            while (!flag) {
+                endingPosition = makePosition(rows, columns);
+                if (m.getStartPosition().getRowIndex() != endingPosition[0] && m.getStartPosition().getColumnIndex() != endingPosition[1]) {
+                    flag = true;
+                }
             }
         }
         m.setGoalPos(endingPosition[0], endingPosition[1]);

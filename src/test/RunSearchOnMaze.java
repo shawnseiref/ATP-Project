@@ -13,12 +13,30 @@ import java.util.ArrayList;
 public class RunSearchOnMaze {
     public static void main(String[] args) {
         IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(30, 30);
+        Maze maze = mg.generate(1000, 1000);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
 
-        solveProblem(searchableMaze, new BreadthFirstSearch());
-        solveProblem(searchableMaze, new DepthFirstSearch());
-        solveProblem(searchableMaze, new BestFirstSearch());
+        BreadthFirstSearch bFS = new BreadthFirstSearch();
+        DepthFirstSearch dFS = new DepthFirstSearch();
+        BestFirstSearch bestFS = new BestFirstSearch();
+        long startTime = System.currentTimeMillis();
+        solveProblem(searchableMaze, bFS);
+        long finishTime = System.currentTimeMillis();
+        long bfs = finishTime - startTime;
+        startTime = System.currentTimeMillis();
+        solveProblem(searchableMaze, dFS);
+        finishTime = System.currentTimeMillis();
+        long dfs = finishTime - startTime;
+        startTime = System.currentTimeMillis();
+        solveProblem(searchableMaze, bestFS);
+        finishTime = System.currentTimeMillis();
+        System.out.println(String.format("'%s' algorithm - nodes evaluated: %s", bFS.getName(), bFS.getNumberOfNodesEvaluated()));
+        System.out.println(String.format("'%s' algorithm - nodes evaluated: %s", dFS.getName(), dFS.getNumberOfNodesEvaluated()));
+        System.out.println(String.format("'%s' algorithm - nodes evaluated: %s", bestFS.getName(), bestFS.getNumberOfNodesEvaluated()));
+        System.out.println("BFS :  "+ bfs);
+        System.out.println("DFS :  "+ dfs);
+        System.out.println("BestFS :  "+ (finishTime - startTime));
+
     }
 
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm searcher) {

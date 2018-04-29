@@ -54,7 +54,7 @@ public class Maze {
     }
 
     public void setStartPos(int row, int column){
-        if(getGoalPosition().getColumnIndex() != -1 && getGoalPosition().getRowIndex() != -1) {
+        if(getGoalPosition().getColumnIndex() == -1 && getGoalPosition().getRowIndex() == -1) {
             startPos.setRow(row);
             startPos.setColumn(column);
             grid[row][column] = 0;
@@ -62,7 +62,7 @@ public class Maze {
     }
     
     public void setGoalPos(int row, int column){
-        if(getGoalPosition().getColumnIndex() != -1 && getGoalPosition().getRowIndex() != -1) {
+        if(getGoalPosition().getColumnIndex() == -1 && getGoalPosition().getRowIndex() == -1) {
             goalPos.setRow(row);
             goalPos.setColumn(column);
             grid[row][column] = 0;
