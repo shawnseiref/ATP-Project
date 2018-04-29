@@ -16,6 +16,8 @@ public class Maze {
      * @param columns - number of columns the maze will have
      */
     public Maze (int rows, int columns){
+        if (rows < 2) rows = 10;
+        if (columns < 2) columns = 10;
         grid = new int[rows][columns];
         // CHECK IF ROWS OR COLUMNS >= 0 !!!!!
         for (int i = 0; i < rows; i++) {
@@ -27,12 +29,22 @@ public class Maze {
         goalPos = new Position(-1,-1);
     }
 
+    /**
+     * Constuctor for prepared grid and positions
+     * @param preparedGrid - the grid to make maze of
+     * @param start - start position
+     * @param goal - goal position
+     */
     public Maze(int[][] preparedGrid, Position start, Position goal) {
         grid = preparedGrid;
         startPos = start;
         goalPos = goal;
     }
 
+    /**
+     * get the maze' grid
+     * @return  int [][] grid
+     */
     public int[][] getGrid(){
         return grid;
     }
@@ -53,6 +65,11 @@ public class Maze {
         return goalPos;
     }
 
+    /**
+     * set the Start position
+     * @param row - the new row value
+     * @param column - the new column value
+     */
     public void setStartPos(int row, int column){
         if(getGoalPosition().getColumnIndex() == -1 && getGoalPosition().getRowIndex() == -1) {
             startPos.setRow(row);
@@ -60,7 +77,13 @@ public class Maze {
             grid[row][column] = 0;
         }
     }
-    
+
+
+    /**
+     * set the Goal position
+     * @param row - the new row value
+     * @param column - the new column value
+     */
     public void setGoalPos(int row, int column){
         if(getGoalPosition().getColumnIndex() == -1 && getGoalPosition().getRowIndex() == -1) {
             goalPos.setRow(row);
@@ -69,6 +92,10 @@ public class Maze {
         }
     }
 
+    /**
+     * set the grid
+     * @param grid - the new grid to use
+     */
     public void setGrid(int[][] grid) {
         this.grid = grid;
     }

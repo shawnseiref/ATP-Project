@@ -11,11 +11,18 @@ public class MyMazeGenerator extends AMazeGenerator {
         neighbors = new ArrayList<Position>();
     }
 
+    /**
+     * ganerate a new maze
+     * @param rows - the number of rows that the maze is going to have
+     * @param columns - the number of columns that the maze is going to have
+     * @return Maze
+     */
     @Override
     public Maze generate(int rows, int columns) {
-        if (rows < 0 || columns < 0)
-            return null;
-
+        if (rows <= 1 || columns <= 1){
+            rows = 100;
+            columns = 100;
+        }
         int[][] grid = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
