@@ -38,8 +38,3 @@ public class Solution {
         Collections.reverse(solutionPath);
 
     }
-
-    public String toString(){
-        return solutionPath.size() + " Steps";
-    }
-}
