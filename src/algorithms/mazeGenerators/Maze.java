@@ -27,6 +27,12 @@ public class Maze {
         goalPos = new Position(-1,-1);
     }
 
+    public Maze(int[][] preparedGrid, Position start, Position goal) {
+        grid = preparedGrid;
+        startPos = start;
+        goalPos = goal;
+    }
+
     public int[][] getGrid(){
         return grid;
     }

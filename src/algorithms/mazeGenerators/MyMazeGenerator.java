@@ -23,7 +23,7 @@ public class MyMazeGenerator extends AMazeGenerator {
             }
         }
 
-
+        //get the start position (randomly)
         Position start = findRandomPositionOnFrame(rows, columns);
         grid[start.getRowIndex()][start.getColumnIndex()] = 0;
         neighbors.add(start);
@@ -40,64 +40,75 @@ public class MyMazeGenerator extends AMazeGenerator {
 
             //break wall if allowed and check that only one or less neighbors with value 0
             count = 0;
-            if (pos.getRowIndex() - 1 >= 0 && grid[pos.getRowIndex() - 1][pos.getColumnIndex()] == 0)
-                count++;
-            if (pos.getColumnIndex() - 1 >= 0 && grid[pos.getRowIndex()][pos.getColumnIndex() - 1] == 0)
-                count++;
-            if (pos.getRowIndex() + 1 < grid.length && grid[pos.getRowIndex() + 1][pos.getColumnIndex()] == 0)
-                count++;
-            if (pos.getColumnIndex() + 1 < grid[0].length && grid[pos.getRowIndex()][pos.getColumnIndex() + 1] == 0)
-                count++;
+            int posRow = pos.getRowIndex();
+            int posCol = pos.getColumnIndex();
+            count = countWallBreaks(grid,0, posRow, posRow-1, posCol, count);
+            count = countWallBreaks(grid, 0, posCol, posRow, posCol-1,count);
+            count = countWallBreaks(grid, posRow+1, grid.length, posRow+1, posCol, count);
+            count = countWallBreaks(grid, posCol+1, grid[0].length, posRow, posCol+1, count);
             if (count <= 1) {
-                grid[pos.getRowIndex()][pos.getColumnIndex()] = 0;
+                grid[posRow][posCol] = 0;
                 flag = true;
             }
 
             //add valid neighbors to list, only if pos was a valid neighbor and value was 1 before
             if (flag) {
-                if (pos.getRowIndex() - 1 >= 0) {
-                    if (grid[pos.getRowIndex() - 1][pos.getColumnIndex()] == 1) {
-                        Position temp = new Position(pos.getRowIndex() - 1, pos.getColumnIndex());
-                        neighbors.add(temp);
-                    }
-                }
-
-                if (pos.getColumnIndex() - 1 >= 0) {
-                    if (grid[pos.getRowIndex()][pos.getColumnIndex() - 1] == 1) {
-                        Position temp = new Position(pos.getRowIndex(), pos.getColumnIndex() - 1);
-                        neighbors.add(temp);
-                    }
-                }
-
-                if (pos.getRowIndex() + 1 < grid.length) {
-                    if (grid[pos.getRowIndex() + 1][pos.getColumnIndex()] == 1) {
-                        Position temp = new Position(pos.getRowIndex() + 1, pos.getColumnIndex());
-                        neighbors.add(temp);
-                    }
-                }
-
-                if (pos.getColumnIndex() + 1 < grid[0].length) {
-                    if (grid[pos.getRowIndex()][pos.getColumnIndex() + 1] == 1) {
-                        Position temp = new Position(pos.getRowIndex(), pos.getColumnIndex() + 1);
-                        neighbors.add(temp);
-                    }
-                }
-
+                addValidNeighbors(grid, 0, posRow, posRow-1, posCol);
+                addValidNeighbors(grid, 0, posCol, posRow, posCol-1);
+                addValidNeighbors(grid, posRow+1, grid.length, posRow+1, posCol);
+                addValidNeighbors(grid, posCol+1, grid[0].length, posRow, posCol+1);
                 flag = false;
             }
         }
 
         Position goal = findRandomPositionOnFrame(rows, columns);
-        while (goal.getColumnIndex()==start.getColumnIndex() || goal.getRowIndex()==start.getRowIndex() || grid[goal.getRowIndex()][goal.getColumnIndex()]!=0)
+
+        // while the start and goal are on the same side of the frame or the goal is on a wall, find another goal position
+        while (goal.getColumnIndex()==start.getColumnIndex() ||
+                goal.getRowIndex()==start.getRowIndex() ||
+                grid[goal.getRowIndex()][goal.getColumnIndex()]!=0)
             goal = findRandomPositionOnFrame(rows, columns);
 
         //initialize myMaze with final grid
         Maze myMaze = new Maze(grid, start, goal);
-
         return myMaze;
     }
 
+    /**
+     * add the valid neighbors to the list if it had the value 1
+     * @param grid - the grid of the map
+     * @param pos - the index that could be out of range
+     * @param limit - the range that pos cant pass
+     * @param i - row index
+     * @param j - column index
+     */
+    private void addValidNeighbors(int[][] grid, int pos, int limit, int i, int j) {
+        if (pos< limit && grid[i][j]==1){
+            Position tmp = new Position(i,j);
+            neighbors.add(tmp);
+        }
+    }
 
+    /**
+     * check if its OK to break a wall (if only 1 neighbor has the value 0)
+     * @param grid - the grid of the map
+     * @param pos - the index that could be out of range
+     * @param limit - the range that pos cant pass
+     * @param i - row index
+     * @param j - column index
+     * @param count - the counter
+     * @return count or count++ depends if passed the check
+     */
+    private int countWallBreaks(int [][] grid, int pos, int limit, int i, int j, int count) {
+        return pos < limit && grid[i][j]==0? ++count: count;
+    }
+
+    /**
+     * find a random position on the frame of a 2D array (based on math)
+     * @param rows - the number of rows the 2D array has
+     * @param columns - the number of columns the 2D array has
+     * @returns the random position on the frame
+     */
     private Position findRandomPositionOnFrame(int rows, int columns) {
         if (rows < 0 || columns < 0) return null;
         Position pos;
@@ -116,5 +127,14 @@ public class MyMazeGenerator extends AMazeGenerator {
         return pos;
     }
 
+    public static void main(String[] args) {
+        Maze m = create(new MyMazeGenerator());
+        m.print();
+    }
+
+    private static Maze create(IMazeGenerator myMazeGenerator) {
+        System.out.println(myMazeGenerator.measureAlgorithmTimeMillis(1000,1000));
+        return myMazeGenerator.generate(6,300);
+    }
 
 }

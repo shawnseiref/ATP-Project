@@ -10,11 +10,12 @@ public class Solution {
     /**
      * constructor for solution
      */
-    public Solution() {
+    public Solution(){
         solutionPath = new ArrayList();
     }
 
     /**
+     *
      * @return list of the solution path
      */
     public ArrayList getSolutionPath() {
@@ -25,17 +26,20 @@ public class Solution {
     /**
      * goes back from the goal state through the path to start and reverse it
      * the solution path is from start to goal
-     *
      * @param goal
      */
-    public void backTrace(AState goal) {
+    public void backTrace(AState goal){
 
         this.solutionPath.add((goal));
-        while (goal.getPrev() != null) {
+        while(goal.getPrev()!=null){
             this.solutionPath.add(goal.getPrev());
             goal = goal.getPrev();
         }
         Collections.reverse(solutionPath);
 
+    }
+
+    public String toString(){
+        return solutionPath.size() + " Steps";
     }
 }

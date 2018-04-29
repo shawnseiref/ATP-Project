@@ -19,8 +19,8 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
     }
 
     /**
-     *
-     * @return
+     * get the name of the searching algorithm
+     * @return String - class.getSimpleName
      */
     public  String getName(){
         return this.getClass().getSimpleName();
