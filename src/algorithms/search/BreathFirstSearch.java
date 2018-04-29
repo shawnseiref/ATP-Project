@@ -17,7 +17,7 @@ public class BreathFirstSearch extends ASearchingAlgorithm {
      * @param s
      * @return sulution
      */
-    Solution solve(ISearchable s) {
+    public Solution solve(ISearchable s) {
         PriorityQueue<AState> pQueue = new PriorityQueue<>(new Comparator<AState>() {
             @Override
             public int compare(AState state, AState t1) {
