@@ -2,17 +2,17 @@ package algorithms.mazeGenerators;
 
 import java.util.Random;
 
+/**
+ * Maze generator that creates a simple maze.
+ */
 public class SimpleMazeGenerator extends AMazeGenerator {
 
-
-//    private int checkCorner(int point, int border){
-//        if (point == 0)
-//            point++;
-//        if (point == border -1)
-//            point--;
-//        return point;
-//    }
-
+    /**
+     * private function that creates end/start position for the maze
+     * @param rows
+     * @param columns
+     * @return array of two that represented the position
+     */
     private int[] makePosition(int rows, int columns) {
         int position[] = new int[2];
         Random coinFlip = new Random();
@@ -20,16 +20,13 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         if (point == 0) {
             position[0] = 0;
             point = coinFlip.nextInt(columns);
-//            point = checkCorner(point, columns);
             position[1] = point;
         } else if (point == 1) {
             position[0] = rows - 1;
             point = coinFlip.nextInt(columns);
-//            point = checkCorner(point, columns);
             position[1] = point;
         } else {
             point = coinFlip.nextInt(rows);
-//            point = checkCorner(point, rows);
             position[0] = point;
             point = coinFlip.nextInt(2);
             if (point == 0)
@@ -40,6 +37,15 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         return position;
     }
 
+    /**
+     *
+     * @param grid - the board
+     * @param x - row position from the end
+     * @param y - column position from the end
+     * @param i - row position from the start
+     * @param j - column position from the start
+     * @return the grid
+     */
     private int[][] makePassage(int[][] grid, int x, int y, int i, int j) {
         while (x != i || y != j) {
             if (x > i) {
@@ -59,6 +65,12 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         return grid;
     }
 
+    /**
+     *  after the path from start to end created, randomize walls
+     *  all over the grid except the path
+     * @param grid - the board
+     * @return - the board itself
+     */
     private int[][] randomizeWalls(int[][] grid) {
         Random coinFlip = new Random();
         int res;
@@ -75,7 +87,7 @@ public class SimpleMazeGenerator extends AMazeGenerator {
     }
 
     /**
-     * ganerate a new maze
+     * generate a new maze
      * @param rows - the number of rows that the maze is going to have
      * @param columns - the number of columns that the maze is going to have
      * @return Maze
