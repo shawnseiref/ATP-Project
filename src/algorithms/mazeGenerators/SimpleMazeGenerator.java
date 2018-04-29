@@ -75,6 +75,10 @@ public class SimpleMazeGenerator extends AMazeGenerator {
     }
 
     public Maze generate(int rows, int columns) {
+        if (rows <= 1 || columns <= 1){
+         rows = 100;
+         columns = 100;
+        }
         Maze m = new Maze(rows, columns);
         int startPosition[] = makePosition(rows, columns);
         m.setStartPos(startPosition[0], startPosition[1]);

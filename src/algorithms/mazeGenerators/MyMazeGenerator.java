@@ -13,9 +13,10 @@ public class MyMazeGenerator extends AMazeGenerator {
 
     @Override
     public Maze generate(int rows, int columns) {
-        if (rows < 0 || columns < 0)
-            return null;
-
+        if (rows <= 1 || columns <= 1){
+            rows = 100;
+            columns = 100;
+        }
         int[][] grid = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
