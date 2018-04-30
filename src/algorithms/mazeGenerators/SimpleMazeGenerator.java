@@ -9,8 +9,8 @@ public class SimpleMazeGenerator extends AMazeGenerator {
 
     /**
      * private function that creates end/start position for the maze
-     * @param rows
-     * @param columns
+     * @param rows : rows
+     * @param columns : rows
      * @return array of two that represented the position
      */
     private int[] makePosition(int rows, int columns) {
@@ -77,7 +77,7 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == 1) {
-                    res = coinFlip.nextInt(2);
+                    res = coinFlip.nextInt(3);
                     if (res == 0)
                         grid[i][j] = 0;
                 }
@@ -95,8 +95,8 @@ public class SimpleMazeGenerator extends AMazeGenerator {
     @Override
     public Maze generate(int rows, int columns) {
         if (rows <= 1 || columns <= 1){
-            rows = 100;
-            columns = 100;
+            rows = 10;
+            columns = 10;
         }
         Maze m = new Maze(rows, columns);
         int startPosition[] = makePosition(rows, columns);
