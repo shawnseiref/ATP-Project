@@ -15,11 +15,12 @@ class JUnitTestingBestFirstSearch {
         IMazeGenerator mg = new SimpleMazeGenerator();
         Maze maze = mg.generate(1000, 1000);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
-//        maze.print();
+        maze.print();
         BestFirstSearch bestFS = new BestFirstSearch();
         long startTime = System.currentTimeMillis();
         Solution solution = bestFS.solve(searchableMaze);
         long finishTime = System.currentTimeMillis();
+        System.out.println(solution.toString());
         assertTrue(finishTime - startTime < 30000);
     }
 
@@ -29,6 +30,7 @@ class JUnitTestingBestFirstSearch {
         Maze maze = mg.generate(1000, 1000);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
         BestFirstSearch bestFS = new BestFirstSearch();
+        maze.print();
         long startTime = System.currentTimeMillis();
         Solution solution = bestFS.solve(searchableMaze);
         long finishTime = System.currentTimeMillis();

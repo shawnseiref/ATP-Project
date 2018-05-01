@@ -4,6 +4,8 @@ import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class SearchableMaze implements ISearchable {
@@ -43,8 +45,8 @@ public class SearchableMaze implements ISearchable {
      * @return list of neighbors
      */
     @Override
-    public ArrayList<AState> getAllPossibleStates(AState s) {
-        ArrayList<AState> neighbors = new ArrayList<AState>();
+    public HashSet<AState> getAllPossibleStates(AState s) {
+        HashSet<AState> neighbors = new HashSet<>();
 
         //create new position near the current state and check it validity
         Position neighborUp = new Position(((MazeState)s).getPosition().getRowIndex()-1, ((MazeState)s).getPosition().getColumnIndex());
@@ -70,7 +72,7 @@ public class SearchableMaze implements ISearchable {
      * @param neighbor
      * @param neighbors
      */
-    private void checkNeighbor(MazeState s, Position neighbor, ArrayList<AState> neighbors) {
+    private void checkNeighbor(MazeState s, Position neighbor, HashSet<AState> neighbors) {
         if(neighbor.getRowIndex()>=0 && neighbor.getColumnIndex()>=0 && neighbor.getRowIndex()<maze.getGrid().length && neighbor.getColumnIndex()<maze.getGrid()[0].length){
             if(maze.getGrid()[neighbor.getRowIndex()][neighbor.getColumnIndex()]!=1){
                 if((s.getPrev() != null && !(((MazeState)s.getPrev()).getPosition().toString().equals(neighbor.toString()))) || s.getPrev() == null){

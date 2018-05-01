@@ -69,4 +69,14 @@ public class Position {
     public String toString(){
         return "{" + row + "," + column + "}";
     }
+
+
+    public boolean equals(Position other){
+        return (other.row==row && other.column==column)? true: false;
+    }
+
+
+    public int hashcode(){
+        return (((row+column)*(row+column+1))/2)+row;
+    }
 }

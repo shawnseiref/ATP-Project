@@ -2,12 +2,13 @@ package algorithms.search;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
 
     protected HashSet<AState> evaluatedNodes;
     protected int evaluatedNodesCount;
-    protected ArrayList<AState> neighbors;
+    protected Set<AState> neighbors;
     protected Solution solution;
 
     /**

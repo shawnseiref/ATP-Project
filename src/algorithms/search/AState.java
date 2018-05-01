@@ -1,6 +1,8 @@
 package algorithms.search;
 
 
+import algorithms.mazeGenerators.Position;
+
 import java.util.Objects;
 
 public abstract class AState{
@@ -94,12 +96,28 @@ public abstract class AState{
         if (this == o) return true;
         if (!(o instanceof AState)) return false;
         AState aState = (AState) o;
-        return aState.hashCode()==hashCode();
+        return state!=null?state.equals(aState.state):aState.state==null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(state);
+//        String [] splited = new String[2];
+//        splited = state.split(",");
+//        splited[1]=splited[1].substring(1);
+//        splited[2]=splited[2].substring(0,splited[2].length()-1);
+//        int x = Integer.parseInt(splited[1]);
+//        int y = Integer.parseInt(splited[1]);
+//        return (((x+y)*(x+y+1))/2)+x;
+        return state!=null? state.hashCode():0;
     }
+//
+//    public static void main(String[] args) {
+//        AState s = new MazeState(null,new Position(0,0),0);
+//        AState s1 = new MazeState(null,new Position(0,1),0);
+//        AState s2 = new MazeState(null,new Position(1,0),0);
+//        System.out.println(s.hashCode());
+//        System.out.println(s1.hashCode());
+//        System.out.println(s2.hashCode());
+//    }
 }
 

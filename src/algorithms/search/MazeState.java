@@ -18,7 +18,11 @@ public class MazeState extends AState {
 
     @Override
     public int hashCode() {
-        return position != null ? position.hashCode() : 0;
+        if (position==null)return 0;
+        int x = position.getRowIndex();
+        int y = position.getColumnIndex();
+        return (((x+y)*(x+y+1))/2)+x;
+//        return position!=null? position.hashCode(): 0;
     }
 
     /**

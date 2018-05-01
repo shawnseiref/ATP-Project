@@ -1,6 +1,8 @@
 package algorithms.search;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Isearchable <<Interface>>
@@ -24,5 +26,5 @@ public interface ISearchable {
      * @param state - the current state
      * @return ArrayList of Astates
      */
-    ArrayList<AState> getAllPossibleStates(AState state);
+    HashSet<AState> getAllPossibleStates(AState state);
 }
