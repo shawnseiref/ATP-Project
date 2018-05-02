@@ -8,23 +8,6 @@ public class MazeState extends AState {
 
     private Position position;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MazeState mazeState = (MazeState) o;
-        return position != null ? position.equals(mazeState.position) : mazeState.position == null;
-    }
-
-    @Override
-    public int hashCode() {
-        if (position==null)return 0;
-        int x = position.getRowIndex();
-        int y = position.getColumnIndex();
-        return (((x+y)*(x+y+1))/2)+x;
-//        return position!=null? position.hashCode(): 0;
-    }
-
     /**
      * initialize the maze state
      * @param parent
@@ -59,13 +42,31 @@ public class MazeState extends AState {
     public Position getPosition() {
         return position;
     }
+
     public void setPosition(Position position) {
         this.position = position;
     }
+
 
     @Override
     public String toString() {
         return  position.toString();
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MazeState mazeState = (MazeState) o;
+        return position != null ? position.equals(mazeState.position) : mazeState.position == null;
+    }
+
+    @Override
+    public int hashCode() {
+        if (position==null)return 0;
+        int x = position.getRowIndex();
+        int y = position.getColumnIndex();
+        return (((x+y)*(x+y+1))/2)+x;
     }
 }

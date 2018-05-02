@@ -13,6 +13,7 @@ public class SearchableMaze implements ISearchable {
     private Maze maze;
 
     public SearchableMaze(Maze maze) {
+        if(maze!=null)
         this.maze = maze;
     }
 
