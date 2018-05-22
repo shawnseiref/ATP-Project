@@ -7,7 +7,7 @@ public class MyDecompressorInputStream extends InputStream {
 
     private InputStream in;
 
-    MyDecompressorInputStream(InputStream inputStream) {
+    public MyDecompressorInputStream(InputStream inputStream) {
         in = inputStream;
     }
 
@@ -16,6 +16,7 @@ public class MyDecompressorInputStream extends InputStream {
         return in.read();
     }
 
+
     public int read(byte[] b) throws IOException {
         if (b == null)
             throw new NullPointerException();
@@ -23,7 +24,7 @@ public class MyDecompressorInputStream extends InputStream {
             throw new ArrayIndexOutOfBoundsException();
 
         int i;
-        for (i = 0; i < 13; i++)
+        for (i = 0; i < 12; i++)
             b[i] = (byte) read();
 
         for (int counter = read() , evenIndicator = -1, wallOrPass; counter != -1; counter = read()) {

@@ -8,7 +8,7 @@ public class MyCompressorOutputStream extends OutputStream {
     private OutputStream out;
     private int len;
 
-    MyCompressorOutputStream(OutputStream o) {
+    public MyCompressorOutputStream(OutputStream o) {
         out = o;
         len = 0;
     }
@@ -29,7 +29,7 @@ public class MyCompressorOutputStream extends OutputStream {
         if (b.length < 13)
             throw new ArrayIndexOutOfBoundsException();
 
-        for (int i = 0; i < 13; i++)
+        for (int i = 0; i < 12; i++)
             write(b[i]); //write the initial data (sizes and positions)
 
         if (b[12] != 0)
