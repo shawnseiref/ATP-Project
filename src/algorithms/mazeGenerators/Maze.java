@@ -14,6 +14,8 @@ public class Maze {
      * @param b - uncompressed byte array
      */
     public Maze(byte[] b) {
+        if (b==null || b.length<13)
+            return;
         int columns = bytesToInt(0, 1, b);
         int rows = bytesToInt(2, 3, b);
         grid = new int[rows][columns];
@@ -33,10 +35,10 @@ public class Maze {
     }
 
     /**
-     * @param i
-     * @param j
-     * @param b
-     * @return
+     * @param i - index of the slot that contains number of full slots (255 in each one)
+     * @param j - index of the slot that contains the modulo of the real number from 256
+     * @param b - the byte array that contains the compressed data
+     * @return int - the real integer value that was converted to 2-byte-number
      */
     private int bytesToInt(int i, int j, byte[] b) {
         int res = (b[i] & (0xff)) * 255;
