@@ -14,7 +14,7 @@ public class Maze {
      * @param b - uncompressed byte array
      */
     public Maze(byte[] b) {
-        if (b==null || b.length<13)
+        if (b == null || b.length < 13)
             return;
         int columns = bytesToInt(0, 1, b);
         int rows = bytesToInt(2, 3, b);
@@ -26,8 +26,8 @@ public class Maze {
         tmpCol = bytesToInt(10, 11, b);
         goalPos = new Position(tmpRow, tmpCol);
         int k = 12;
-        for (int i = 0; i < rows && k<b.length; i++) {
-            for (int j = 0; j < columns && k<b.length; j++) {
+        for (int i = 0; i < rows && k < b.length; i++) {
+            for (int j = 0; j < columns && k < b.length; j++) {
                 grid[i][j] = (int) b[k];
                 k++;
             }
@@ -167,4 +167,30 @@ public class Maze {
             System.out.println();
         }
     }
+
+    public byte[] toByteArray() {
+        int size = grid.length * grid[0].length;
+        byte[] data = new byte[size + 12];
+        data[0] = (byte) (grid.length / 255);
+        data[1] = (byte) (grid.length % 256);
+        data[2] = (byte) (grid[0].length / 255);
+        data[3] = (byte) (grid[0].length % 256);
+        data[4] = (byte) (startPos.getRowIndex() / 255);
+        data[5] = (byte) (startPos.getRowIndex() % 256);
+        data[6] = (byte) (startPos.getColumnIndex() / 255);
+        data[7] = (byte) (startPos.getColumnIndex() % 256);
+        data[8] = (byte) (goalPos.getRowIndex() / 255);
+        data[9] = (byte) (goalPos.getRowIndex() % 256);
+        data[10] = (byte) (goalPos.getColumnIndex() / 255);
+        data[11] = (byte) (goalPos.getColumnIndex() % 256);
+        int k = 12;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; k++, j++) {
+                data[k] = (byte) (grid[i][j]);
+            }
+        }
+        return data;
+    }
+
+
 }
