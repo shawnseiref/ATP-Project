@@ -36,7 +36,7 @@ public class Maze {
 
     /**
      * @param i - index of the slot that contains number of full slots (255 in each one)
-     * @param j - index of the slot that contains the modulo of the real number from 256
+     * @param j - index of the slot that contains the modulo of the real number from 255
      * @param b - the byte array that contains the compressed data
      * @return int - the real integer value that was converted to 2-byte-number
      */
@@ -172,17 +172,17 @@ public class Maze {
         int size = grid.length * grid[0].length;
         byte[] data = new byte[size + 12];
         data[0] = (byte) (grid.length / 255);
-        data[1] = (byte) (grid.length % 256);
+        data[1] = (byte) (grid.length % 255);
         data[2] = (byte) (grid[0].length / 255);
-        data[3] = (byte) (grid[0].length % 256);
+        data[3] = (byte) (grid[0].length % 255);
         data[4] = (byte) (startPos.getRowIndex() / 255);
-        data[5] = (byte) (startPos.getRowIndex() % 256);
+        data[5] = (byte) (startPos.getRowIndex() % 255);
         data[6] = (byte) (startPos.getColumnIndex() / 255);
-        data[7] = (byte) (startPos.getColumnIndex() % 256);
+        data[7] = (byte) (startPos.getColumnIndex() % 255);
         data[8] = (byte) (goalPos.getRowIndex() / 255);
-        data[9] = (byte) (goalPos.getRowIndex() % 256);
+        data[9] = (byte) (goalPos.getRowIndex() % 255);
         data[10] = (byte) (goalPos.getColumnIndex() / 255);
-        data[11] = (byte) (goalPos.getColumnIndex() % 256);
+        data[11] = (byte) (goalPos.getColumnIndex() % 255);
         int k = 12;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; k++, j++) {
