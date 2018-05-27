@@ -1,9 +1,11 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
+
 /**
  * Maze class
  */
-public class Maze {
+public class Maze implements Serializable {
     private int[][] grid;
     private Position startPos;
     private Position goalPos;
