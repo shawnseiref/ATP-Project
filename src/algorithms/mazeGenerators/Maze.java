@@ -42,7 +42,6 @@ public class Maze {
      */
     private int bytesToInt(int i, int j, byte[] b) {
         int res = (b[i] & (0xff)) * 255;
-        res += (b[i] & (0xff));
         res += (b[j] & (0xff));
         return res;
     }
@@ -173,17 +172,17 @@ public class Maze {
         int size = grid.length * grid[0].length;
         byte[] data = new byte[size + 12];
         data[0] = (byte) (grid.length / 255);
-        data[1] = (byte) (grid.length % 256);
+        data[1] = (byte) (grid.length % 255);
         data[2] = (byte) (grid[0].length / 255);
-        data[3] = (byte) (grid[0].length % 256);
+        data[3] = (byte) (grid[0].length % 255);
         data[4] = (byte) (startPos.getRowIndex() / 255);
-        data[5] = (byte) (startPos.getRowIndex() % 256);
+        data[5] = (byte) (startPos.getRowIndex() % 255);
         data[6] = (byte) (startPos.getColumnIndex() / 255);
-        data[7] = (byte) (startPos.getColumnIndex() % 256);
+        data[7] = (byte) (startPos.getColumnIndex() % 255);
         data[8] = (byte) (goalPos.getRowIndex() / 255);
-        data[9] = (byte) (goalPos.getRowIndex() % 256);
+        data[9] = (byte) (goalPos.getRowIndex() % 255);
         data[10] = (byte) (goalPos.getColumnIndex() / 255);
-        data[11] = (byte) (goalPos.getColumnIndex() % 256);
+        data[11] = (byte) (goalPos.getColumnIndex() % 255);
         int k = 12;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; k++, j++) {
@@ -192,6 +191,4 @@ public class Maze {
         }
         return data;
     }
-
-
 }
