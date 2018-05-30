@@ -14,27 +14,27 @@ import java.util.logging.Logger;
 
 public class Server {
 
-    public static class Configurations {
-        public static void RunProperties(){
-            Properties properties = new Properties();
+    private static class Configurations {
+        public static void RunProperties() {
+            Properties prop = new Properties();
             FileOutputStream output = null;
 
-            try{
+            try {
                 File file = new File("Resources/config.properties");
                 if (!file.exists()) {
                     output = new FileOutputStream("Resources/config.properties");
-                    properties.setProperty("Number of Threads", "1");
-                    properties.setProperty("Generate Maze Algorithm", "MyMazeGenerator");
-                    properties.setProperty("Search Algorithm", "BestFirstSearch");
-                    properties.store(output, (String)null);
+                    prop.setProperty("Number of Threads", "2");
+                    prop.setProperty("Generate Maze Algorithm", "MyMazeGenerator");
+                    prop.setProperty("Search Algorithm", "BestFirstSearch");
+                    prop.store(output, (String) null);
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                if (output != null){
-                    try{
+                if (output != null) {
+                    try {
                         output.close();
-                    } catch (IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -46,20 +46,52 @@ public class Server {
     private int listeningInterval;
     private IServerStrategy serverStrategy;
     private volatile boolean stop;
-    private ExecutorService executorService;
+    private ExecutorService threadPool;
     private static final Logger LOG = Logger.getLogger(Server.class.getName());
+
 
     public Server(int port, int listeningInterval, IServerStrategy serverStrategy) {
         this.port = port;
         this.listeningInterval = listeningInterval;
         this.serverStrategy = serverStrategy;
         LOG.setLevel(Level.WARNING);
+        Configurations p = new Configurations();
+        Configurations.RunProperties();
+        Properties prop = new Properties();
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream("Resources/config.properties");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            prop.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (input != null) {
+            try {
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String numOfThreads;
+        int n;
+        try {
+            numOfThreads = prop.getProperty("Number of Threads");
+            n = Integer.parseInt(numOfThreads);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            n = 2;
+        }
+
+        threadPool = Executors.newFixedThreadPool(n);
     }
 
+
     public void start() {
-        new Thread(() -> {
-            runServer();
-        }).start();
+        new Thread(() -> runServer()).start();
     }
 
     private void runServer() {
@@ -92,7 +124,7 @@ public class Server {
             clientSocket.getOutputStream().close();
             clientSocket.close();
 
-        } catch (IOException e){
+        } catch (IOException e) {
             LOG.severe(String.format("IOException: ", e));
         }
     }

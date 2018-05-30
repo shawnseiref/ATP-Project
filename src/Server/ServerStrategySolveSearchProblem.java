@@ -44,8 +44,8 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
                 }
                 input.close();
             }
-            Solution sol = null;
-            if (mazesHistory.containsKey(data)) {
+            Solution sol;
+            if (!mazesHistory.containsKey(data)) {
                 SearchableMaze sMaze = new SearchableMaze(maze);
                 InputStream input = new FileInputStream("Resources/config.properties");
                 properties.load(input);
