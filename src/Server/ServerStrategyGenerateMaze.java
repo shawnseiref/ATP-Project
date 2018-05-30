@@ -15,7 +15,7 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             toClient.flush();
             int[] size = (int[])(fromClient.readObject());
             if (size.length != 2){
-                System.out.println(size.length); //CHECK CHECK CHECK!
+                System.out.println("array size: " + size.length + " is not 2"); //CHECK CHECK CHECK!
             } else {
                 AMazeGenerator mazeGenerator = new MyMazeGenerator();
                 Maze maze = mazeGenerator.generate(size[0], size[1]);
