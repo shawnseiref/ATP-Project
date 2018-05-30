@@ -7,6 +7,7 @@ import java.net.SocketTimeoutException;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -23,6 +24,7 @@ public class Server {
         this.port = port;
         this.listeningInterval = listeningInterval;
         this.serverStrategy = serverStrategy;
+        LOG.setLevel(Level.WARNING);
     }
 
     public void start() {

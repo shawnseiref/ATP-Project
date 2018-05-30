@@ -3,7 +3,7 @@ package Server;
 import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
-import IO.MyCompressorOutputStream
+import IO.MyCompressorOutputStream;
 import java.io.*;
 
 public class ServerStrategyGenerateMaze implements IServerStrategy {
