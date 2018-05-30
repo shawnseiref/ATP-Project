@@ -102,6 +102,7 @@ public class Server {
             while (!stop) {
                 try {
                     Socket clientSocket = server.accept(); // blocking call
+                    threadPool.execute(() -> handleClient(clientSocket));
                     LOG.info(String.format("Client excepted: %s", clientSocket.toString()));
                     new Thread(() -> {
                         handleClient(clientSocket);
@@ -132,5 +133,6 @@ public class Server {
     public void stop() {
         LOG.info("Stopping server..");
         stop = true;
+        threadPool.shutdown();
     }
 }
