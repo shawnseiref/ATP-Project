@@ -66,7 +66,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
                 solvedMazesFile.close();
             } else {
                 String s = mazesHistory.get(data);
-                ObjectInputStream inputData = new ObjectInputStream(new FileInputStream(path + "\\" + s))
+                ObjectInputStream inputData = new ObjectInputStream(new FileInputStream(path + "\\" + s));
                 sol = (Solution) inputData.readObject();
                 inputData.close();
             }

@@ -13,6 +13,35 @@ import java.util.logging.Logger;
 
 
 public class Server {
+
+    public static class Configurations {
+        public static void RunProperties(){
+            Properties properties = new Properties();
+            FileOutputStream output = null;
+
+            try{
+                File file = new File("Resources/config.properties");
+                if (!file.exists()) {
+                    output = new FileOutputStream("Resources/config.properties");
+                    properties.setProperty("Number of Threads", "1");
+                    properties.setProperty("Generate Maze Algorithm", "MyMazeGenerator");
+                    properties.setProperty("Search Algorithm", "BestFirstSearch");
+                    properties.store(output, (String)null);
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                if (output != null){
+                    try{
+                        output.close();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
     private int port;
     private int listeningInterval;
     private IServerStrategy serverStrategy;
