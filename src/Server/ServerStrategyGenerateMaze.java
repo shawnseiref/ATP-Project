@@ -4,20 +4,46 @@ import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import IO.MyCompressorOutputStream;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
+
 import java.io.*;
+import java.util.Properties;
 
 public class ServerStrategyGenerateMaze implements IServerStrategy {
 
+
+    private AMazeGenerator checkMazeGeneratorAlgorithm(String s) {
+        if (s.equals("SimpleMazeGenerator")) {
+            return new SimpleMazeGenerator();
+        } else {
+            return new MyMazeGenerator();
+        }
+    }
+
+
     public void serverStrategy(InputStream inFromClient, OutputStream outToClient) {
+        Properties properties = new Properties();
+
         try {
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
             toClient.flush();
-            int[] size = (int[])(fromClient.readObject());
-            if (size.length != 2){
+            int[] size = (int[]) (fromClient.readObject());
+            if (size.length != 2) {
+                /*WHAT TO DO IF ARRAY SIZE IS NOT 2?!?!*/
                 System.out.println("array size: " + size.length + " is not 2"); //CHECK CHECK CHECK!
+                /* WHAT TO DO IF ARRAY SIZE IS NOT 2?!?! */
             } else {
-                AMazeGenerator mazeGenerator = new MyMazeGenerator();
+                InputStream input = new FileInputStream("Resources/config.properties");
+                properties.load(input);
+                String mazeGenerateAlgorithm = properties.getProperty("Generate Maze Algorithm");
+                AMazeGenerator mazeGenerator = checkMazeGeneratorAlgorithm(mazeGenerateAlgorithm);
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 Maze maze = mazeGenerator.generate(size[0], size[1]);
                 String mazeFileName = "compressedMaze.maze";
                 MyCompressorOutputStream output = new MyCompressorOutputStream(new FileOutputStream(mazeFileName));
@@ -25,15 +51,13 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
                 int len = output.getLen();
                 output.flush();
                 output.close();
-                InputStream input = new FileInputStream(mazeFileName);
+                InputStream inputMazeFileNam = new FileInputStream(mazeFileName);
                 byte[] savedMazeBytes = new byte[len];
-                input.read(savedMazeBytes);
-                input.close();
+                inputMazeFileNam.read(savedMazeBytes);
+                inputMazeFileNam.close();
                 toClient.writeObject(savedMazeBytes);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e){
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
