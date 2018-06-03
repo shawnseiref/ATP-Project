@@ -104,9 +104,6 @@ public class Server {
                     Socket clientSocket = server.accept(); // blocking call
                     threadPool.execute(() -> handleClient(clientSocket));
                     LOG.info(String.format("Client excepted: %s", clientSocket.toString()));
-//                    new Thread(() -> {
-//                        handleClient(clientSocket);
-//                    }).start();
                 } catch (SocketTimeoutException e) {
                     LOG.warning("SocketTimeout - No clients pending!");
                 }
@@ -121,8 +118,8 @@ public class Server {
             LOG.info("Client axcepted!");
             LOG.info(String.format("Handling client with socket: %s", clientSocket.toString()));
             serverStrategy.serverStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
-            clientSocket.getOutputStream().close();
             clientSocket.getInputStream().close();
+            //clientSocket.getOutputStream().close();
             clientSocket.close();
 
         } catch (IOException e) {
