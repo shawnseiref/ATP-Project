@@ -104,9 +104,9 @@ public class Server {
                     Socket clientSocket = server.accept(); // blocking call
                     threadPool.execute(() -> handleClient(clientSocket));
                     LOG.info(String.format("Client excepted: %s", clientSocket.toString()));
-                    new Thread(() -> {
-                        handleClient(clientSocket);
-                    }).start();
+//                    new Thread(() -> {
+//                        handleClient(clientSocket);
+//                    }).start();
                 } catch (SocketTimeoutException e) {
                     LOG.warning("SocketTimeout - No clients pending!");
                 }
