@@ -121,8 +121,8 @@ public class Server {
             LOG.info("Client axcepted!");
             LOG.info(String.format("Handling client with socket: %s", clientSocket.toString()));
             serverStrategy.serverStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
-            clientSocket.getInputStream().close();
             clientSocket.getOutputStream().close();
+            clientSocket.getInputStream().close();
             clientSocket.close();
 
         } catch (IOException e) {
