@@ -54,7 +54,7 @@ public class Server {
         this.port = port;
         this.listeningInterval = listeningInterval;
         this.serverStrategy = serverStrategy;
-        LOG.setLevel(Level.WARNING);
+        LOG.setLevel(Level.SEVERE);
         Configurations p = new Configurations();
         Configurations.RunProperties();
         Properties prop = new Properties();
