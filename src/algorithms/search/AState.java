@@ -1,10 +1,8 @@
 package algorithms.search;
 
 
-import algorithms.mazeGenerators.Position;
-
 import java.io.Serializable;
-import java.util.Objects;
+
 
 public abstract class AState implements Serializable {
 

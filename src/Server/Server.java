@@ -1,6 +1,10 @@
 package Server;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -8,7 +12,6 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 
@@ -23,10 +26,10 @@ public class Server {
                 File file = new File("Resources/config.properties");
                 if (!file.exists()) {
                     output = new FileOutputStream("Resources/config.properties");
-                    prop.setProperty("Number of Threads", "2");
+                    prop.setProperty("Number of Threads", "22");
                     prop.setProperty("Generate Maze Algorithm", "MyMazeGenerator");
                     prop.setProperty("Search Algorithm", "BestFirstSearch");
-                    prop.store(output, (String) null);
+                    prop.store(output, null);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -80,10 +83,18 @@ public class Server {
         int n;
         try {
             numOfThreads = prop.getProperty("Number of Threads");
-            n = Integer.parseInt(numOfThreads);
-        } catch (NullPointerException e) {
+            if (numOfThreads != null) {
+                try {
+                    n = Integer.parseInt(numOfThreads);
+                } catch (NumberFormatException e) {
+                    n = 22;
+                }
+            }
+            else
+                n = 22;
+        } catch (Exception e) {
             e.printStackTrace();
-            n = 2;
+            n = 22;
         }
 
         threadPool = Executors.newFixedThreadPool(n);
@@ -118,8 +129,8 @@ public class Server {
             LOG.info("Client axcepted!");
             LOG.info(String.format("Handling client with socket: %s", clientSocket.toString()));
             serverStrategy.serverStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
-            clientSocket.getInputStream().close();
-            //clientSocket.getOutputStream().close();
+            clientSocket.getOutputStream().close();
+//            clientSocket.getInputStream().close();
             clientSocket.close();
 
         } catch (IOException e) {

@@ -6,15 +6,26 @@ import algorithms.mazeGenerators.MyMazeGenerator;
 import IO.MyCompressorOutputStream;
 import algorithms.mazeGenerators.SimpleMazeGenerator;
 
-import java.io.*;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
 public class ServerStrategyGenerateMaze implements IServerStrategy {
 
 
     private AMazeGenerator checkMazeGeneratorAlgorithm(String s) {
-        if (s.equals("SimpleMazeGenerator")) {
-            return new SimpleMazeGenerator();
+        if (s != null) {
+            if (s.equals("SimpleMazeGenerator")) {
+                return new SimpleMazeGenerator();
+            } else {
+                return new MyMazeGenerator();
+            }
         } else {
             return new MyMazeGenerator();
         }
@@ -25,8 +36,8 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
         Properties properties = new Properties();
 
         try {
-            ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
+            ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             toClient.flush();
             int[] size = (int[]) (fromClient.readObject());
             if (size.length != 2) {

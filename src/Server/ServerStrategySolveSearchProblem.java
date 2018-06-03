@@ -3,7 +3,14 @@ package Server;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.*;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.File;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -12,15 +19,23 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
 
 
     private Solution solveWithAlgorithm(String s, SearchableMaze sMaze) {
-        if (s.equals("BestFirstSearch")) {
-            ASearchingAlgorithm BestFS = new BestFirstSearch();
-            return BestFS.solve(sMaze);
-        } else if (s.equals("BreadthFirstSearch")) {
-            ASearchingAlgorithm BreadthFS = new BreadthFirstSearch();
-            return BreadthFS.solve(sMaze);
+        if (s != null) {
+            if (s.equals("BestFirstSearch")) {
+                ASearchingAlgorithm BestFS = new BestFirstSearch();
+                return BestFS.solve(sMaze);
+            } else if (s.equals("BreadthFirstSearch")) {
+                ASearchingAlgorithm BreadthFS = new BreadthFirstSearch();
+                return BreadthFS.solve(sMaze);
+            } else if (s.equals("DepthFirstSearch")) {
+                ASearchingAlgorithm DepthFS = new DepthFirstSearch();
+                return DepthFS.solve(sMaze);
+            } else {
+                ASearchingAlgorithm BestFS = new BreadthFirstSearch();
+                return BestFS.solve(sMaze);
+            }
         } else {
-            ASearchingAlgorithm DepthFS = new DepthFirstSearch();
-            return DepthFS.solve(sMaze);
+            ASearchingAlgorithm BestFS = new BreadthFirstSearch();
+            return BestFS.solve(sMaze);
         }
     }
 
@@ -29,12 +44,17 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
     public void serverStrategy(InputStream inFromClient, OutputStream outToClient) {
         Properties properties = new Properties();
         try {
-            ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
+            ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             toClient.flush();
             Maze maze = (Maze) fromClient.readObject();
             byte[] data = maze.toByteArray();
+            /* FOR SUBMISSION */
             String path = System.getProperty("java.io.tmpdir");
+//            String path = System.getProperty("user.dir");
+//            path += "/tmp";
+            /* FOR LINUX USE */
+//            String path = System.getProperty("/home/ilan/Desktop/DATA/Documents/school/semester d 2/NosimMitkadmimBetihnut");
             String solvedMazesPath = path + "\\solvedMazes";
             File file = new File(solvedMazesPath);
             if (file.exists()) {

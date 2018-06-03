@@ -31,7 +31,6 @@ public class MyCompressorOutputStream extends OutputStream {
 
         for (int i = 0; i < 12; i++)
             write(b[i]); //write the initial data (sizes and positions)
-
         if (b[12] != 0)
             write(0); //if maze[0][0] is a wall
 
