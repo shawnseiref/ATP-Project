@@ -55,11 +55,12 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             toClient.flush();
             Maze maze = (Maze) fromClient.readObject();
             byte[] data = maze.toByteArray();
-            /* FOR SUBMISSION */
-            String path = System.getProperty("java.io.tmpdir");
-            /* FOR LINUX USE */
-//            String path = System.getProperty("user.dir");
-//            path += "/tmp";
+//            /* FOR SUBMISSION */
+//            String path = System.getProperty("java.io.tmpdir");
+//            /* FOR LINUX USE */
+            String path = System.getProperty("user.dir");
+            path += "/tmp";
+            System.out.println(path);
             String solvedMazesPath = path + "\\solvedMazes";
             File file = new File(solvedMazesPath);
             if (file.exists()) {
