@@ -19,24 +19,30 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
 
 
     private Solution solveWithAlgorithm(String s, SearchableMaze sMaze) {
-        if (s != null) {
-            if (s.equals("BestFirstSearch")) {
-                ASearchingAlgorithm BestFS = new BestFirstSearch();
-                return BestFS.solve(sMaze);
-            } else if (s.equals("BreadthFirstSearch")) {
-                ASearchingAlgorithm BreadthFS = new BreadthFirstSearch();
-                return BreadthFS.solve(sMaze);
-            } else if (s.equals("DepthFirstSearch")) {
-                ASearchingAlgorithm DepthFS = new DepthFirstSearch();
-                return DepthFS.solve(sMaze);
-            } else {
-                ASearchingAlgorithm BestFS = new BreadthFirstSearch();
-                return BestFS.solve(sMaze);
-            }
-        } else {
-            ASearchingAlgorithm BestFS = new BreadthFirstSearch();
-            return BestFS.solve(sMaze);
-        }
+       try {
+           if (s != null) {
+               if (s.equals("BestFirstSearch")) {
+                   ASearchingAlgorithm BestFS = new BestFirstSearch();
+                   return BestFS.solve(sMaze);
+               } else if (s.equals("BreadthFirstSearch")) {
+                   ASearchingAlgorithm BreadthFS = new BreadthFirstSearch();
+                   return BreadthFS.solve(sMaze);
+               } else if (s.equals("DepthFirstSearch")) {
+                   ASearchingAlgorithm DepthFS = new DepthFirstSearch();
+                   return DepthFS.solve(sMaze);
+               } else {
+                   ASearchingAlgorithm BestFS = new BreadthFirstSearch();
+                   return BestFS.solve(sMaze);
+               }
+           } else {
+               ASearchingAlgorithm BestFS = new BreadthFirstSearch();
+               return BestFS.solve(sMaze);
+           }
+       } catch (Exception e){
+           ASearchingAlgorithm BestFS = new BreadthFirstSearch();
+           return BestFS.solve(sMaze);
+       }
+
     }
 
 
@@ -51,10 +57,9 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             byte[] data = maze.toByteArray();
             /* FOR SUBMISSION */
             String path = System.getProperty("java.io.tmpdir");
+            /* FOR LINUX USE */
 //            String path = System.getProperty("user.dir");
 //            path += "/tmp";
-            /* FOR LINUX USE */
-//            String path = System.getProperty("/home/ilan/Desktop/DATA/Documents/school/semester d 2/NosimMitkadmimBetihnut");
             String solvedMazesPath = path + "\\solvedMazes";
             File file = new File(solvedMazesPath);
             if (file.exists()) {

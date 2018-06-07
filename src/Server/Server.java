@@ -26,7 +26,7 @@ public class Server {
                 File file = new File("Resources/config.properties");
                 if (!file.exists()) {
                     output = new FileOutputStream("Resources/config.properties");
-                    prop.setProperty("Number of Threads", "22");
+                    prop.setProperty("Number of Threads", "2");
                     prop.setProperty("Generate Maze Algorithm", "MyMazeGenerator");
                     prop.setProperty("Search Algorithm", "BestFirstSearch");
                     prop.store(output, null);
@@ -86,15 +86,16 @@ public class Server {
             if (numOfThreads != null) {
                 try {
                     n = Integer.parseInt(numOfThreads);
+                    if (n<1) n=2;
                 } catch (NumberFormatException e) {
-                    n = 22;
+                    n = 2;
                 }
             }
             else
-                n = 22;
+                n = 2;
         } catch (Exception e) {
             e.printStackTrace();
-            n = 22;
+            n = 2;
         }
 
         threadPool = Executors.newFixedThreadPool(n);
