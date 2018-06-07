@@ -1,11 +1,10 @@
 package algorithms.search;
 
-import algorithms.mazeGenerators.Position;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Solution {
+public class Solution implements Serializable {
 
     private ArrayList solutionPath;
 

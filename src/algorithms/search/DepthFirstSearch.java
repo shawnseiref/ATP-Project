@@ -1,6 +1,8 @@
 package algorithms.search;
 
-import java.util.*;
+
+import java.util.HashSet;
+import java.util.Stack;
 
 /**
  * DFS Algorithm
